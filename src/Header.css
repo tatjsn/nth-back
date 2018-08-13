@@ -1,0 +1,17 @@
+.Header {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  background-color: gold;
+}
+
+.Header__item {
+  position: absolute;
+  height: 100%;
+  line-height: 120px;
+  padding: 0 1rem;
+}
+
+.Header__item--right {
+  right: 0;
+}
