@@ -3,9 +3,12 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 
-const INIT = 0;
-const RUN = 1;
-const GAMEOVER = 3;
+const STATUS_INIT = 0;
+const STATUS_WAITINPUT = 1;
+const STATUS_PAUSE = 2;
+const STATUS_GAMEOVER = 3;
+const GOOD = String.fromCodePoint(0x1F646);
+const BAD = String.fromCodePoint(0x1F645);
 
 class App extends Component {
   constructor() {
@@ -17,7 +20,7 @@ class App extends Component {
       types: 0,
       array: [],
       now: 0,
-      status: INIT,
+      status: STATUS_INIT,
     };
   }
 
@@ -29,7 +32,8 @@ class App extends Component {
       types: 3,
       array: [],
       now: 0,
-      status: RUN,
+      wasCorrect: true,
+      status: STATUS_WAITINPUT,
     });
   }
 
@@ -48,17 +52,30 @@ class App extends Component {
         score: this.state.score + 1,
         array: this.makeNewArray(),
         now: this.makeValue(),
+        wasCorrect: true,
+        status: STATUS_PAUSE,
       });
-    } else if (this.state.life > 1) {
-      // damage
-      this.setState({
-        life: this.state.life - 1,
-        array: this.makeNewArray(),
-        now: this.makeValue(),
-      });
+      setTimeout(() => {
+        this.setState({ status: STATUS_WAITINPUT });
+      }, 300);
+      return;
+    }
+    // bad
+    this.setState({
+      life: this.state.life - 1,
+      array: this.makeNewArray(),
+      now: this.makeValue(),
+      wasCorrect: false,
+      status: STATUS_PAUSE,
+    });
+    if (this.state.life > 1) {
+      setTimeout(() => {
+        this.setState({ status: STATUS_WAITINPUT });
+      }, 300);
     } else {
-      // game over
-      this.setState({ status: GAMEOVER });
+      setTimeout(() => {
+        this.setState({ status: STATUS_GAMEOVER });
+      }, 1000); // wait a bit longer
     }
   }
 
@@ -73,15 +90,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {((this.state.status === INIT) ||
-          (this.state.status === GAMEOVER)) ?
+        {((this.state.status === STATUS_INIT) ||
+          (this.state.status === STATUS_GAMEOVER)) ?
           (<div className="App__main" onClick={this.handleGo}>
-            {this.state.status === INIT ? "Go!" : "Game Over. Try Again?"}
+            {this.state.status === STATUS_INIT ? "Ready?" : "Game Over. Try Again?"}
           </div>) :
           (<div>
             <Header score={this.state.score} life={this.state.life} />
             <div className="App__main">
-              {this.state.now}
+              {this.state.status === STATUS_WAITINPUT ? this.state.now :
+                (this.state.wasCorrect ? GOOD : BAD)}
             </div>
             <Footer onYes={this.handleYes} onNo={this.handleNo} />
           </div>)

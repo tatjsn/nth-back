@@ -5,13 +5,13 @@
   background-color: gold;
 }
 
-.Header__item {
+.Header .Header__item {
   position: absolute;
   height: 100%;
   line-height: 120px;
   padding: 0 1rem;
 }
 
-.Header__item--right {
+.Header .Header__item--right {
   right: 0;
 }
