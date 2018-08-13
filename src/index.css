@@ -56,4 +56,5 @@ body {
   position: relative;
   margin: 0;
   background-color: white;
+  touch-action: manipulation; /* prevent ios zoom */
 }
