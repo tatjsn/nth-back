@@ -46,6 +46,11 @@ class App extends Component {
   }
 
   handleYesNo(isCorrect) {
+    if (this.state.status !== STATUS_WAITINPUT) {
+      // do not accept
+      return;
+    }
+
     if (isCorrect) {
       // good
       this.setState({
@@ -71,11 +76,11 @@ class App extends Component {
     if (this.state.life > 1) {
       setTimeout(() => {
         this.setState({ status: STATUS_WAITINPUT });
-      }, 300);
+      }, 500);
     } else {
       setTimeout(() => {
         this.setState({ status: STATUS_GAMEOVER });
-      }, 1000); // wait a bit longer
+      }, 3000); // wait a bit longer
     }
   }
 

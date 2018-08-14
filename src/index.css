@@ -9,3 +9,10 @@ body {
   background-color: white;
   touch-action: manipulation; /* prevent ios zoom */
 }
+
+input[type="button"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background-color: transparent;
+}

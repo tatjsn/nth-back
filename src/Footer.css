@@ -3,7 +3,7 @@
   width: 100%;
   height: 120px;
   bottom: 0;
-  background-color: pink;
+  background-color: #EF5350; /* red 400 */
 }
 
 .Footer .Footer__button {
@@ -14,7 +14,7 @@
 }
 
 .Footer .Footer__button:active {
-  background-color: white;
+  background-color: #FFCDD2; /* red 100 */
 }
 
 

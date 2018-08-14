@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Header.css';
 
 const SMILE = String.fromCodePoint(0x1F60A);
+const DEAD = String.fromCodePoint(0x1F480);
 
 class Header extends Component {
   render() {
@@ -11,7 +12,7 @@ class Header extends Component {
           Score: {this.props.score}
         </div>
         <div className="Header__item Header__item--right">
-          {Array.from({ length: this.props.life }, _ => SMILE)}
+          {this.props.life > 0 ? Array.from({ length: this.props.life }, _ => SMILE) : DEAD}
         </div>
       </div>
     );
